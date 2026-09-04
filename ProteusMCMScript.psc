@@ -103,43 +103,43 @@ endFunction
 
 function OnOptionKeyMapChange(Int option, Int keyCode, String a_conflictControl, String a_conflictName)
 	if option == castK1 
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k1.setValue(keyCode as Float)
 	;elseif option == castK2
-	;	self.SetKeyMapOptionValueST(keyCode, false, "")
+	;	self.SetKeyMapOptionValue(option, keyCode, false)
 	;	k2.setValue(keyCode as Float)
 	elseif option == castK3
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k3.setValue(keyCode as Float)
 	elseif option == castK5
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k5.setValue(keyCode as Float)
 	elseif option == castK6
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k6.setValue(keyCode as Float)
 	elseif option == castK7
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k7.setValue(keyCode as Float)
 	elseif option == castK8
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k8.setValue(keyCode as Float)
 	elseif option == castK9
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k9.setValue(keyCode as Float)
 	elseif option == castK10
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k10.setValue(keyCode as Float)
 	elseif option == castK11
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k11.setValue(keyCode as Float)
 	elseif option == castK12
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k12.setValue(keyCode as Float)
 	elseif option == castK13
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k13.setValue(keyCode as Float)
 	elseif option == castK14
-		self.SetKeyMapOptionValueST(keyCode, false, "")
+		self.SetKeyMapOptionValue(option, keyCode, false)
 		k14.setValue(keyCode as Float)
 	endIf
 	self.ForcePageReset()
