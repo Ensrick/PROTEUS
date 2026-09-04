@@ -14,12 +14,16 @@ globalvariable property k10 auto
 globalvariable property k11 auto
 globalvariable property k12 auto
 globalvariable property k13 auto
+globalvariable property k14 auto
 globalvariable property disableHotkeys auto
 globalvariable property explosionsOn auto
 globalvariable property ZZEnableSpawnPerkLoad auto
 globalvariable property ZZEnableSpawnSpellLoad auto
 globalvariable property ZZLoadPlayerPreset auto
+globalvariable property ZZBackupAppearanceSave auto
+globalvariable property ZZAlternativeDeathSystem auto
 
+Quest property ZZProteusRecurringQuest auto
 ;-- Variables ---------------------------------------
 Int castK1
 Int castK2
@@ -33,18 +37,23 @@ Int castK10
 Int castK11
 Int castK12
 Int castK13
+Int castK14 ;weather
 
 Int disableOID
 Int explosionsOnOID
 Int spawnPerksLoadOID
 Int spawnSpellsLoadOID
 Int presetGameStartOID
+Int backupAppearanceSaveOID
+Int alternativeDeathSystemOID
 
 Bool disableVal
 Bool explosionsOnVal
 Bool spawnPerksOnVal
 Bool spawnSpellsOnVal
 Bool presetGameStartOnVal
+Bool backupAppearanceSaveVal
+Bool alternativeDeathSystemVal
 
 ;-- Functions ---------------------------------------
 
@@ -56,6 +65,8 @@ function OnPageReset(String page)
 		spawnPerksLoadOID = self.AddToggleOption("Spawns Have Perks", ZZEnableSpawnPerkLoad.getValue() as Bool)
 		spawnSpellsLoadOID = self.AddToggleOption("Spawns Have Spells", ZZEnableSpawnSpellLoad.getValue() as Bool)
 		presetGameStartOID = self.AddToggleOption("Load Preset on Player at Game Start", ZZLoadPlayerPreset.getValue() as Bool)
+		backupAppearanceSaveOID = self.AddToggleOption("Create RaceMenu Backups on Save", ZZBackupAppearanceSave.getValue() as Bool)
+		alternativeDeathSystemOID = self.AddToggleOption("Enable Proteus Alternative Death System", ZZAlternativeDeathSystem.getValue() as Bool)
 
 		self.SetCursorPosition(1)
 		self.AddHeaderOption("NPC Module Options", 0)
@@ -84,13 +95,13 @@ function OnPageReset(String page)
 		self.AddHeaderOption("Other Hotkeys", 0)
 		castK12 = self.AddKeyMapOption("Proteus Wheel", k12.getValue() as Int, 0)
 		castK13 = self.AddKeyMapOption("Spawner", k13.getValue() as Int, 0)
+		castK14 = self.AddKeyMapOption("Weather", k14.getValue() as Int, 0)
 
 	endIf
 endFunction
 
 
 function OnOptionKeyMapChange(Int option, Int keyCode, String a_conflictControl, String a_conflictName)
-{Called when a key has been remapped}
 	if option == castK1 
 		self.SetKeyMapOptionValueST(keyCode, false, "")
 		k1.setValue(keyCode as Float)
@@ -127,6 +138,9 @@ function OnOptionKeyMapChange(Int option, Int keyCode, String a_conflictControl,
 	elseif option == castK13
 		self.SetKeyMapOptionValueST(keyCode, false, "")
 		k13.setValue(keyCode as Float)
+	elseif option == castK14
+		self.SetKeyMapOptionValueST(keyCode, false, "")
+		k14.setValue(keyCode as Float)
 	endIf
 	self.ForcePageReset()
 endFunction
@@ -142,6 +156,10 @@ function OnOptionHighlight(Int option)
 		self.SetInfoText("Enable to have Proteus Spawns load spells from the associated player character.\nDefault: true")
 	elseif option == presetGameStartOID
 		self.SetInfoText("Enable to have preset load on player at game start. Prevents appearance issues.\nDefault: true")
+	elseif option == backupAppearanceSaveOID
+		self.SetInfoText("Enable to have create RaceMenu appearance backups each time you save your character into PROTEUS.\nDefault: false")
+	elseif option == alternativeDeathSystemOID
+		self.SetInfoText("Enable to take full advantage of Proteus alternative death system.\nDefault: false")
 	endIf
 endFunction
 
@@ -194,6 +212,32 @@ function OnOptionDefault(Int option)
 			ZZLoadPlayerPreset.setValue(0 as Float)
 		elseIf presetGameStartOnVal == true
 			ZZLoadPlayerPreset.setValue(1 as Float)
+		endIf
+	endIf
+
+	if option == backupAppearanceSaveOID
+		backupAppearanceSaveVal = false
+		self.SetToggleOptionValue(backupAppearanceSaveOID, backupAppearanceSaveVal, false)
+		if backupAppearanceSaveVal == false
+			ZZBackupAppearanceSave.setValue(0 as Float)
+		elseIf backupAppearanceSaveVal == true
+			ZZBackupAppearanceSave.setValue(1 as Float)
+		endIf
+	endIf
+
+	if option == alternativeDeathSystemOID
+		alternativeDeathSystemVal = false
+		self.SetToggleOptionValue(alternativeDeathSystemOID, alternativeDeathSystemVal, false)
+		if alternativeDeathSystemVal == false
+			ZZAlternativeDeathSystem.setValue(0 as Float)
+			(ZZProteusRecurringQuest.GetNthAlias(0) as ReferenceAlias).Clear()
+		elseIf alternativeDeathSystemVal == true
+			ZZAlternativeDeathSystem.setValue(1 as Float)
+			(ZZProteusRecurringQuest.GetNthAlias(0) as ReferenceAlias).ForceRefTo(Game.GetPlayer())
+			int targetModIndex = Game.GetModByName("Sacrosanct - Vampires of Skyrim.esp")
+			if TargetModIndex != 255
+				(Game.GetFormFromFile(0x1401D9, "Sacrosanct - Vampires of Skyrim.esp") as GlobalVariable).SetValue(1)
+			endIf
 		endIf
 	endIf
 endFunction
@@ -250,6 +294,32 @@ function OnOptionSelect(Int option)
 			ZZLoadPlayerPreset.setValue(0 as Float)
 		elseIf presetGameStartOnVal == true
 			ZZLoadPlayerPreset.setValue(1 as Float)
+		endIf
+	endIf
+
+	if option == backupAppearanceSaveOID
+		backupAppearanceSaveVal = !backupAppearanceSaveVal
+		self.SetToggleOptionValue(backupAppearanceSaveOID, backupAppearanceSaveVal, false)
+		if backupAppearanceSaveVal == false
+			ZZBackupAppearanceSave.setValue(0 as Float)
+		elseIf backupAppearanceSaveVal == true
+			ZZBackupAppearanceSave.setValue(1 as Float)
+		endIf
+	endIf
+
+	if option == alternativeDeathSystemOID
+		alternativeDeathSystemVal = !alternativeDeathSystemVal
+		self.SetToggleOptionValue(alternativeDeathSystemOID, alternativeDeathSystemVal, false)
+		if alternativeDeathSystemVal == false
+			ZZAlternativeDeathSystem.setValue(0 as Float)
+			(ZZProteusRecurringQuest.GetNthAlias(0) as ReferenceAlias).Clear()
+		elseIf alternativeDeathSystemVal == true
+			ZZAlternativeDeathSystem.setValue(1 as Float)
+			(ZZProteusRecurringQuest.GetNthAlias(0) as ReferenceAlias).ForceRefTo(Game.GetPlayer())
+			int targetModIndex = Game.GetModByName("Sacrosanct - Vampires of Skyrim.esp")
+			if TargetModIndex != 255
+				(Game.GetFormFromFile(0x1401D9, "Sacrosanct - Vampires of Skyrim.esp") as GlobalVariable).SetValue(1)
+			endIf
 		endIf
 	endIf
 endFunction
