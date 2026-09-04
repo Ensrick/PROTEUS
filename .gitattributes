@@ -1,0 +1,9 @@
+* text=auto
+*.psc text eol=lf
+*.ps1 text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+VERSION text eol=lf
+*.pex binary
+*.zip binary

@@ -33,3 +33,7 @@ uimagicmenu.psc
 JValue.psc
 JMap.psc
 uimenuload.psc
+.build/
+artifacts/
+__pycache__/
+*.pyc

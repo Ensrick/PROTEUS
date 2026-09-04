@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "name": "Proteus MCM Indexed Hotkeys",
+  "version": "0.1.0",
+  "upstream": {
+    "repository": "https://github.com/phenderix/PROTEUS",
+    "commit": "fed75f6f30395e15b3d67ea3789e93737c09277a",
+    "license": "MIT"
+  },
+  "baseline": {
+    "product": "Proteus 3.4.0",
+    "nexusModId": 62934,
+    "nexusFileId": 497484,
+    "archiveSha256": "847A241F965436B13475A2A057AB061408BE2D9A3DF62C34AA4925BB1324C63B",
+    "sourcePath": "Source/Scripts/ProteusMCMScript.psc",
+    "sourceSha256": "36BA7794673108C9B025B95CD0A03A81CAD9D469E9F8E9429391E8DA69569740"
+  },
+  "change": {
+    "tracker": "https://github.com/Ensrick/skyrim-mod-assistant/issues/216",
+    "summary": "Use SkyUI's indexed SetKeyMapOptionValue API in all twelve active OnOptionKeyMapChange branches."
+  },
+  "distribution": {
+    "type": "separate overlay",
+    "requiresOriginalMod": true,
+    "commercialUse": false,
+    "donationPointsRequirePermission": true
+  }
+}
